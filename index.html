@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAD SKIS — Bozeman, MT</title>
+    <meta name="description" content="Expert ski tuning, repairs, and gear in Bozeman, Montana. Plus events, films, and après vibes.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --white: #fafafa;
+            --gray: #888;
+            --gray-dark: #333;
+            --gray-light: #e5e5e5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Archivo Black', sans-serif;
+            font-weight: 400;
+            line-height: 1.1;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+            border-bottom: 2px solid var(--black);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--white);
+            border-bottom: 2px solid var(--black);
+            transition: transform 0.3s ease;
+        }
+
+        nav.hidden {
+            transform: translateY(-100%);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .logo span {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            color: var(--gray);
+        }
+
+        .nav-links {
+            display: none;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 5px 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .nav-links a:hover {
+            border-color: var(--black);
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            margin-right: -10px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--black);
+            transition: all 0.3s;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 6px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -6px);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 62px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--white);
+            z-index: 999;
+            padding: 40px 20px;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-menu a {
+            display: block;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2rem;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: 80px;
+            border-bottom: 2px solid var(--black);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            padding: 60px 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 15vw, 12rem);
+            line-height: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .hero h1 .outline {
+            -webkit-text-stroke: 2px var(--black);
+            color: transparent;
+        }
+
+        .hero-tagline {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            max-width: 500px;
+            margin-bottom: 40px;
+            color: var(--gray-dark);
+        }
+
+        .hero-cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 2px solid var(--black);
+            background: var(--black);
+            color: var(--white);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--black);
+        }
+
+        .btn-outline:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        /* Marquee */
+        .marquee {
+            overflow: hidden;
+            border-bottom: 2px solid var(--black);
+            background: var(--black);
+            color: var(--white);
+            padding: 15px 0;
+        }
+
+        .marquee-inner {
+            display: flex;
+            animation: marquee 20s linear infinite;
+            white-space: nowrap;
+        }
+
+        .marquee-item {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1rem;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .marquee-item::after {
+            content: '✦';
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2px;
+            background: var(--black);
+            border: 2px solid var(--black);
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 40px 30px;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .service-number {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 4rem;
+            line-height: 1;
+            color: var(--gray-light);
+            margin-bottom: 20px;
+            transition: color 0.3s;
+        }
+
+        .service-card:hover .service-number {
+            color: var(--gray-dark);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .service-card:hover p {
+            color: var(--gray-light);
+        }
+
+        /* Tuning Section */
+        .tuning-list {
+            display: grid;
+            gap: 0;
+            border: 2px solid var(--black);
+        }
+
+        .tuning-item {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+            padding: 25px 20px;
+            border-bottom: 1px solid var(--gray-light);
+            align-items: start;
+        }
+
+        .tuning-item:last-child {
+            border-bottom: none;
+        }
+
+        .tuning-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .tuning-item p {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .tuning-price {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.5rem;
+            white-space: nowrap;
+        }
+
+        /* Events */
+        .events-list {
+            display: grid;
+            gap: 0;
+        }
+
+        .event-item {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 20px;
+            padding: 30px 0;
+            border-bottom: 1px solid var(--gray-light);
+            align-items: start;
+        }
+
+        .event-item:first-child {
+            border-top: 2px solid var(--black);
+        }
+
+        .event-item:last-child {
+            border-bottom: 2px solid var(--black);
+        }
+
+        .event-date {
+            text-align: center;
+        }
+
+        .event-date .day {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2.5rem;
+            line-height: 1;
+        }
+
+        .event-date .month {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray);
+        }
+
+        .event-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .event-info p {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+
+        .event-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: 1px solid var(--black);
+        }
+
+        /* Hours & Contact */
+        .contact-grid {
+            display: grid;
+            gap: 40px;
+        }
+
+        .hours-list {
+            border: 2px solid var(--black);
+        }
+
+        .hours-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--gray-light);
+            font-size: 0.9rem;
+        }
+
+        .hours-item:last-child {
+            border-bottom: none;
+        }
+
+        .hours-item.today {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .contact-detail {
+            margin-bottom: 25px;
+        }
+
+        .contact-detail label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+
+        .contact-detail a,
+        .contact-detail p {
+            font-size: 1.1rem;
+        }
+
+        .contact-detail a:hover {
+            text-decoration: underline;
+        }
+
+        /* Section Headers */
+        .section-header {
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 8vw, 5rem);
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            max-width: 500px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 60px 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-col h4 {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            margin-bottom: 20px;
+            color: var(--gray);
+        }
+
+        .footer-col a {
+            display: block;
+            padding: 8px 0;
+            font-size: 0.9rem;
+            color: var(--gray-light);
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid var(--gray-dark);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2rem;
+        }
+
+        .footer-legal {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2px;
+            background: var(--black);
+            border: 2px solid var(--black);
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 3rem;
+            color: var(--gray);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-item::before {
+            content: attr(data-label);
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray-dark);
+        }
+
+        /* Brands */
+        .brands-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .brand-tag {
+            padding: 12px 20px;
+            border: 1px solid var(--black);
+            font-size: 0.8rem;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        .brand-tag:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            section {
+                padding: 120px 0;
+            }
+
+            .nav-links {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: none;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .footer-bottom {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .tuning-item {
+                grid-template-columns: 200px 1fr auto;
+            }
+
+            .event-item {
+                grid-template-columns: 100px 1fr auto;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hero-content {
+                padding: 100px 20px;
+            }
+
+            .container {
+                padding: 0 60px;
+            }
+
+            .nav-inner {
+                padding: 20px 60px;
+            }
+        }
+
+        /* Utility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="nav">
+        <div class="nav-inner">
+            <a href="#" class="logo">
+                RAD SKIS
+                <span>Bozeman, MT</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#tuning">Tuning</a></li>
+                <!-- #<li><a href="#events">#Events</a></li> -->
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#services" onclick="closeMenu()">Services</a>
+        <a href="#tuning" onclick="closeMenu()">Tuning</a>
+        <!-- <a href="#shop" onclick="closeMenu()">Shop</a> -->
+        <!-- <a href="#events" onclick="closeMenu()">Events</a> -->
+        <a href="#contact" onclick="closeMenu()">Contact</a>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content container">
+            <h1>
+                GET<br>
+                <span class="outline">YOUR</span><br>
+                SHRED ON
+            </h1>
+            <p class="hero-tagline">
+                Expert ski tuning, repairs & gear in Bozeman. Plus après vibes you won't find anywhere else.
+            </p>
+            <div class="hero-cta">
+                <a href="#tuning" class="btn">Book a Tune</a>
+                <!-- <a href="#events" class="btn btn-outline">See Events</a> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="marquee">
+        <div class="marquee-inner">
+            <span class="marquee-item">Stone Grinding</span>
+            <span class="marquee-item">Edge Work</span>
+            <span class="marquee-item">Hot Wax</span>
+            <span class="marquee-item">Boot Fitting</span>
+            <span class="marquee-item">Binding Mount</span>
+            <span class="marquee-item">Base Repair</span>
+            <span class="marquee-item">Ski Films</span>
+            <span class="marquee-item">Après Parties</span>
+            <span class="marquee-item">Stone Grinding</span>
+            <span class="marquee-item">Edge Work</span>
+            <span class="marquee-item">Hot Wax</span>
+            <span class="marquee-item">Boot Fitting</span>
+            <span class="marquee-item">Binding Mount</span>
+            <span class="marquee-item">Base Repair</span>
+            <span class="marquee-item">Ski Films</span>
+            <span class="marquee-item">Après Parties</span>
+           
+        </div>
+    </div>
+
+    <!-- Services -->
+    <section id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>What We Do</h2>
+                <p>Three ways we keep you on the mountain.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-number">01</div>
+                    <h3>Tuning & Repairs</h3>
+                    <p>World-class stone grinds, precision edge work, and hot wax. We treat every ski like our own.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-number">02</div>
+                    <h3>Gear Shop</h3>
+                    <p>Curated selection of from the best brands in the game.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-number">03</div>
+                    <h3>Events</h3>
+                    <p>Ski films, après parties, clinics, and community events all season. We're more than a shop.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  <!-- Gallery -->
+<!--     <section style="padding: 0; border-bottom: none;">
+        <div class="gallery-grid">
+            <div class="gallery-item" data-label="Powder Days">⛷</div>
+            <div class="gallery-item" data-label="Bridger Bowl">🏔</div>
+            <div class="gallery-item" data-label="Big Sky">❄</div>
+            <div class="gallery-item" data-label="Backcountry">🎿</div>
+        </div>
+    </section> -->
+
+    <!-- Tuning -->
+    <section id="tuning">
+        <div class="container">
+            <div class="section-header">
+                <h2>Tuning & Repairs</h2>
+                <p>Master technicians. Quick turnaround.</p>
+            </div>
+            <div class="tuning-list">
+                <div class="tuning-item">
+                    <div>
+                        <h4>Full Tune</h4>
+                        <p>Stone grind, edge sharpen, hot wax, base repair</p>
+                    </div>
+                    <div class="tuning-price">$90</div>
+                </div>
+                <div class="tuning-item">
+                    <div>
+                        <h4>Binding Mount</h4>
+                        <p>Professional mounting with alignment check </p>
+                    </div>
+                    <div class="tuning-price">$75</div>
+                </div>
+                <div class="tuning-item">
+                    <div>
+                        <h4>Edge Sharpen</h4>
+                        <p>Precision edge angle restoration</p>
+                    </div>
+                    <div class="tuning-price">$25</div>
+                </div>
+                <div class="tuning-item">
+                    <div>
+                        <h4>Wax</h4>
+                        <p>Hot wax application</p>
+                    </div>
+                    <div class="tuning-price">$25</div>
+                </div>
+                   <div class="tuning-item">
+                    <div>
+                        <h4>Edge and Wax</h4>
+                        <p>Hot wax application and precision edge work</p>
+                    </div>
+                    <div class="tuning-price">$45</div>
+                </div>
+                <div class="tuning-item">
+                    <div>
+                        <h4>Skin Cut</h4>
+                        <p>Get your skins cut to size</p>
+                    </div>
+                    <div class="tuning-price">$30</div>
+                </div>
+                <div class="tuning-item">
+                    <div>
+                        <h4>Base Repair</h4>
+                        <p>P-tex fill and finish — Varies</p>
+                    </div>
+                    <div class="tuning-price">Based off damage</div>
+                </div>
+                
+                <div class="tuning-item">
+                    <div>
+                        <h4>Boot Work</h4>
+                        <p>Footbed, shell work, liner mods — Varies</p>
+                    </div>
+                    <div class="tuning-price">Varies</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Find Us</h2>
+                <p>In Rad Bikes! Find us between Roly-Poly Coffee and Bozone Brewing. Free parking.</p>
+            </div>
+            <div class="contact-grid">
+                <div>
+                    <h3 style="font-size: 0.75rem; letter-spacing: 0.15em; margin-bottom: 20px; color: var(--gray);">HOURS</h3>
+                    <div class="hours-list">
+                        <div class="hours-item" data-day="1">
+                            <span>Monday</span>
+                            <span>Closed</span>
+                        </div>
+                        <div class="hours-item" data-day="2">
+                            <span>Tuesday</span>
+                            <span>Closed</span>
+                        </div>
+                        <div class="hours-item" data-day="3">
+                            <span>Wednesday</span>
+                            <span>Closed</span>
+                        </div>
+                        <div class="hours-item" data-day="4">
+                            <span>Thursday</span>
+                            <span>9 AM – 6 PM</span>
+                        </div>
+                        <div class="hours-item" data-day="5">
+                            <span>Friday</span>
+                            <span>9 AM – 6 PM</span>
+                        </div>
+                        <div class="hours-item" data-day="6">
+                            <span>Saturday</span>
+                            <span>9 AM – 6 PM</span>
+                        </div>
+                        <div class="hours-item" data-day="0">
+                            <span>Sunday</span>
+                            <span>9 AM – 6 PM</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-info">
+                    <h3 style="font-size: 0.75rem; letter-spacing: 0.15em; margin-bottom: 20px; color: var(--gray);">CONTACT</h3>
+                    <div class="contact-detail">
+                        <label>Phone</label>
+                        <a href="tel:4065551234">(315)783-5499 or (970)401-1046</a>
+                    </div>
+                    <div class="contact-detail">
+                        <label>Email</label>
+                        <a href="mailto:info@radskis.com">pgefell9@gmail.com</a>
+                    </div>
+                    <div class="contact-detail">
+                        <label>Address</label>
+                        <p>512 N Broadway<br>Bozeman, MT 59715</p>
+                    </div>
+                    <a href="https://maps.google.com" target="_blank" class="btn btn-outline" style="margin-top: 20px;">Get Directions →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+            
+                <div class="footer-col">
+                    <h4>Social</h4>
+                    <a href="https://www.instagram.com/rad_skis/">Instagram</a>
+                    <!-- <a href="#">Facebook</a> -->
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-logo">RAD SKIS</div>
+                <div class="footer-legal">© 2026 Rad Skis. All rights reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        function closeMenu() {
+            menuToggle.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Highlight today's hours
+        const today = new Date().getDay();
+        const hoursItems = document.querySelectorAll('.hours-item');
+        hoursItems.forEach(item => {
+            if (parseInt(item.dataset.day) === today) {
+                item.classList.add('today');
+            }
+        });
+
+        // Hide nav on scroll down, show on scroll up
+        let lastScroll = 0;
+        const nav = document.getElementById('nav');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                nav.classList.add('hidden');
+            } else {
+                nav.classList.remove('hidden');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
